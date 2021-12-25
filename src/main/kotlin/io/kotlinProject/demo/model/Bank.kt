@@ -6,10 +6,10 @@ data class Bank(
     val transactionFee: Int
 )
 
-// in Kotlin if we want to have a getter, `get()` unser variable is
+// in Kotlin if we want to have a getter, `get()` under variable is
 // a better option compared to separate getter function
 
-// by default properties in Kotlin are public. Hence you don't need
+// by default properties in Kotlin are public. Hence, you don't need
 // to type `public`. But if you need `private` -> type it
 
 // data class automatically creates implementation of `equals/hashcode/toString`
