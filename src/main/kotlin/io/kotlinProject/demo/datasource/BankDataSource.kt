@@ -9,4 +9,6 @@ interface BankDataSource {
     fun retrieveBank(): Bank
 
     fun getAccBank(accNum: String): Bank
+
+    fun createNewBank(bank: Bank): Bank
 }

@@ -21,6 +21,10 @@ class BankService(private val dataSource: BankDataSource) {
         return dataSource.getAccBank(accNum)
     }
 
+    fun addBank(bank: Bank): Bank {
+        return dataSource.createNewBank(bank)
+    }
+
 }
 
 // @Service makes it (i.e. object of the class) available in the runtime

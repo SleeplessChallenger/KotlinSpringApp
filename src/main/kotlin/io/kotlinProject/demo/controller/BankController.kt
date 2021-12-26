@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.*
 class BankController(private val service: BankService) {
 
     @ExceptionHandler(NoSuchElementException::class)
-    // i.e. if `getBankAccount` returns error that no
-    // such bank was found: SpringBoot will handle it
-    fun handleIfNotFound(e: NoSuchElementException): ResponseEntity<String> =
-        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        // i.e. if `getBankAccount` returns error that no
+        // such bank was found: SpringBoot will handle it
+        fun handleIfNotFound(e: NoSuchElementException): ResponseEntity<String> =
+            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+
+    @ExceptionHandler(IllegalArgumentException::class)
+        fun handleBadRequest(e: IllegalArgumentException): ResponseEntity<String> =
+            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+
 
     @GetMapping
     fun getAllBanks(): Collection<Bank> {
@@ -30,5 +35,11 @@ class BankController(private val service: BankService) {
     fun getBankAccount(@PathVariable accNum: String): Bank? {
         // @PathVariable allows putting params in `url`
         return service.getAccBank(accNum)
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createBank(@RequestBody bank: Bank): Bank {
+        return service.addBank(bank)
     }
  }
