@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.patch
 import org.springframework.test.web.servlet.post
 
 // TODO: Re-write some tests using @Nested
@@ -84,6 +85,12 @@ internal class BankControllerTest @Autowired constructor(
                 jsonPath("$.trust") { value(31.434) }
                 jsonPath("$.transactionFee") { value(5)}
             }
+
+        // check that db indeed persists new bank
+        mockMvc.get("/api/banks/bank/${newBank.accountNumber}")
+            .andExpect {
+                content { json(objectMapper.writeValueAsString(newBank)) }
+            }
     }
 
     @Test
@@ -102,6 +109,54 @@ internal class BankControllerTest @Autowired constructor(
             .andDo { print() }
             .andExpect {
                 status { isBadRequest() }
+            }
+    }
+
+    @Test
+    fun `should alter exisitng bank`() {
+        // given
+        val updatedBank = Bank("1234", 5.1, 2)
+
+        // when
+        val response = mockMvc.patch("/api/banks") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(updatedBank)
+        }
+
+        // then
+        response
+            .andDo { print() }
+            .andExpect {
+                status { isOk() }
+                content {
+                    contentType(MediaType.APPLICATION_JSON)
+                    json(objectMapper.writeValueAsString(updatedBank))
+                }
+            }
+
+        // to check that db indeed persists the changes
+        mockMvc.get("/api/banks/bank/${updatedBank.accountNumber}")
+            .andExpect {
+                content { json(objectMapper.writeValueAsString(updatedBank)) }
+            }
+    }
+
+    @Test
+    fun `should return BAD_REQUEST_PATCH`() {
+        // given
+        val currBank = Bank("1214", 7.5, 4)
+
+        // when
+        val response = mockMvc.patch("/api/banks") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(currBank)
+        }
+
+        // then
+        response
+            .andDo { print() }
+            .andExpect {
+                status { isNotFound() }
             }
     }
 }

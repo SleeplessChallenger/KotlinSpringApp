@@ -27,14 +27,31 @@ class MockBankDataSource: BankDataSource {
     }
 
     override fun createNewBank(bank: Bank): Bank {
-        if(banks.any { it.accountNumber == bank.accountNumber }) {
-            throw IllegalArgumentException("Such AccountNumber: ${bank.accountNumber} already exists")
+        if (banks.any { it.accountNumber == bank.accountNumber }) {
+            throw IllegalArgumentException("Post: Such AccountNumber: ${bank.accountNumber} already exists")
         }
         banks.add(bank)
 
         return bank
     }
+
+    override fun tweakBank(bank: Bank): Bank {
+        if (banks.any { it.accountNumber == bank.accountNumber }) {
+            val oldBank: Bank = banks.first { it.accountNumber == bank.accountNumber }
+            banks.remove(oldBank)
+            banks.add(bank)
+
+            return bank
+        } else {
+            throw NoSuchElementException("Patch: Such AccountNumber: ${bank.accountNumber} doesn't exist")
+        }
+    }
 }
+        // another way
+//        val currBank: Bank? = banks.firstOrNull { it.accountNumber == bank.accountNumber }
+//            ?: throw NoSuchElementException("Patch: Such AccountNumber: ${bank.accountNumber} doesn't exist")
+//    }
+
 
 
 // Repository implicates that it's responsible for retrieving/

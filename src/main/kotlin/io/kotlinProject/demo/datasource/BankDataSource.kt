@@ -11,4 +11,6 @@ interface BankDataSource {
     fun getAccBank(accNum: String): Bank
 
     fun createNewBank(bank: Bank): Bank
+
+    fun tweakBank(bank: Bank): Bank
 }

@@ -25,6 +25,10 @@ class BankService(private val dataSource: BankDataSource) {
         return dataSource.createNewBank(bank)
     }
 
+    fun updateBank(bank: Bank): Bank {
+        return dataSource.tweakBank(bank)
+    }
+
 }
 
 // @Service makes it (i.e. object of the class) available in the runtime
