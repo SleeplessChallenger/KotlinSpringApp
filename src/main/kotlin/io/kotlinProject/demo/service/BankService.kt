@@ -13,6 +13,14 @@ class BankService(private val dataSource: BankDataSource) {
         return dataSource.retrieveBanks()
     }
 
+    fun getBank(): Bank {
+        return dataSource.retrieveBank()
+    }
+
+    fun getAccBank(accNum: String): Bank {
+        return dataSource.getAccBank(accNum)
+    }
+
 }
 
 // @Service makes it (i.e. object of the class) available in the runtime

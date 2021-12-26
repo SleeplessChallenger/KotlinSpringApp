@@ -32,4 +32,28 @@ internal class BankControllerTest {
                     value("435353")
             }}
     }
+
+    @Test
+    fun `should return only one bank`() {
+        // when/then
+        mockMvc.get("/api/banks/OneBank")
+            .andDo { print() }
+            .andExpect {
+                status { isOk() }
+                content { contentType(MediaType.APPLICATION_JSON) }
+            }
+    }
+
+    @Test
+    fun `should return bank by accNum`() {
+        // when/then
+        val accNum: String = "435353"
+
+        mockMvc.get("/api/banks/bank/$accNum")
+            .andDo { print() }
+            .andExpect {
+                status { isOk() }
+                content { contentType(MediaType.APPLICATION_JSON) }
+            }
+    }
 }

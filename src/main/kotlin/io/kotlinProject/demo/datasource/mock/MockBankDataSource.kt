@@ -15,6 +15,16 @@ class MockBankDataSource: BankDataSource {
 
     override fun retrieveBanks(): Collection<Bank> = banks
 
+    override fun retrieveBank(): Bank {
+        return banks.random()
+    }
+
+    override fun getAccBank(accNum: String): Bank {
+        // hashed row will give default message to Spring
+//        return banks.first { it.accountNumber == accNum }
+        return banks.firstOrNull() { it.accountNumber == accNum }
+            ?: throw NoSuchElementException("DB doesn't have such bank")
+    }
 }
 
 
