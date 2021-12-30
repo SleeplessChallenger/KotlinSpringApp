@@ -29,6 +29,10 @@ class BankService(private val dataSource: BankDataSource) {
         return dataSource.tweakBank(bank)
     }
 
+    fun deleteBank(accountNumber: String): Unit {
+        dataSource.deleteBank(accountNumber)
+    }
+
 }
 
 // @Service makes it (i.e. object of the class) available in the runtime

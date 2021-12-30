@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.patch
-import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.*
 
 // TODO: Re-write some tests using @Nested
 
@@ -154,6 +151,42 @@ internal class BankControllerTest @Autowired constructor(
 
         // then
         response
+            .andDo { print() }
+            .andExpect {
+                status { isNotFound() }
+            }
+    }
+
+    @Test
+    fun `should delete provided bank`() {
+        // given
+        val accountNumber = 1243
+
+        // when
+        mockMvc.delete("/api/banks/$accountNumber")
+
+        // then
+            .andDo { print() }
+            .andExpect {
+                status { isNoContent() }
+            }
+
+        mockMvc.get("/api/banks/bank/$accountNumber")
+            .andDo { print() }
+            .andExpect {
+                status { isNotFound() }
+            }
+    }
+
+    @Test
+    fun `should return NOT_FOUND if not bank exists`() {
+        // given
+        val accountNum = "Some random code"
+
+        // when
+        mockMvc.delete("/api/banks/$accountNum")
+
+        // then
             .andDo { print() }
             .andExpect {
                 status { isNotFound() }

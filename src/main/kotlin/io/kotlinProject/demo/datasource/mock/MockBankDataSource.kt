@@ -46,12 +46,14 @@ class MockBankDataSource: BankDataSource {
             throw NoSuchElementException("Patch: Such AccountNumber: ${bank.accountNumber} doesn't exist")
         }
     }
-}
-        // another way
-//        val currBank: Bank? = banks.firstOrNull { it.accountNumber == bank.accountNumber }
-//            ?: throw NoSuchElementException("Patch: Such AccountNumber: ${bank.accountNumber} doesn't exist")
-//    }
 
+    override fun deleteBank(accountNumber: String): Unit {
+        val bank: Bank = banks.firstOrNull { it.accountNumber == accountNumber }
+            ?: throw NoSuchElementException("Delete: Such account number: $accountNumber doesn't exist")
+
+        banks.remove(bank)
+    }
+}
 
 
 // Repository implicates that it's responsible for retrieving/
