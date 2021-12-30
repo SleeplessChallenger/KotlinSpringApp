@@ -2,11 +2,12 @@ package io.kotlinProject.demo.service
 
 import io.kotlinProject.demo.datasource.BankDataSource
 import io.kotlinProject.demo.model.Bank
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
 
 @Service
-class BankService(private val dataSource: BankDataSource) {
+class BankService(@Qualifier("network") private val dataSource: BankDataSource) {
     // class requires `object` of TYPE BankDataSource
 
     fun getBanks(): Collection<Bank> {

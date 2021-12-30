@@ -1,22 +1,42 @@
 package io.kotlinProject.demo.controller
 
+//import com.fasterxml.jackson.databind.ObjectMapper
+//import io.kotlinProject.demo.model.Bank
+//import org.junit.jupiter.api.Test
+//import org.springframework.beans.factory.annotation.Autowired
+//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+//import org.springframework.boot.test.context.SpringBootTest
+//import org.springframework.http.MediaType
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.kotlinProject.demo.model.Bank
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.web.servlet.*
 import org.springframework.test.web.servlet.*
 
 // TODO: Re-write some tests using @Nested
 
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class BankControllerTest @Autowired constructor(
-     private val mockMvc: MockMvc,
-     private val objectMapper: ObjectMapper
-) {
+//internal class BankControllerTest @Autowired constructor(
+//     val mockMvc: MockMvc,
+//     val objectMapper: ObjectMapper
+//) {
+internal class BankControllerTest {
+
+    @Autowired
+    private lateinit var mockMvc: MockMvc
+
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
     // as we use `SpringBoot`, we don't need to have
     // `object` of the class, but we make requests to the
     // very REST API (Endpoint)
@@ -193,3 +213,9 @@ internal class BankControllerTest @Autowired constructor(
             }
     }
 }
+
+// FIRST acronym:
+// Fast; Isolated (independent of order, machine etc), Repeatable,
+// Self-validating (actual vs expected), Timely
+// `@DirtiesContext` is to tell JUnit to restore the state
+// of the application context
