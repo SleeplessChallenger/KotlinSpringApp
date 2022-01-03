@@ -1,0 +1,16 @@
+1. What is `Gradle`?: build-automation tool
+2. `gradlew` is for case when we're in the project
+with a specific version of gradle whilst `gradle`
+requires it to be installed on the machine.
+PS: but sometimes you need to run `./gradlew` so as to tell
+gradlew to use folder in the current dir
+3. To run the app we can: `./gradlew bootRun`
+4. Another way to run the app:
+    4.1 compile in JAR: `./gradlew bootJar`
+    4.2 java -jar build\libs\_____ where __
+        takes JAR file
+5.  To create && run docker image:
+    5.1`./gradlew bootBuildImage` would assemble a
+    docker image
+    5.2 `docker run ____` where __ is the name of
+        an image

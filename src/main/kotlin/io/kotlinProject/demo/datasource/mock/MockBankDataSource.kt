@@ -4,7 +4,7 @@ import io.kotlinProject.demo.datasource.BankDataSource
 import io.kotlinProject.demo.model.Bank
 import org.springframework.stereotype.Repository
 
-@Repository
+@Repository("mock")
 class MockBankDataSource: BankDataSource {
 
     val banks = mutableListOf(
