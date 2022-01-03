@@ -19,7 +19,12 @@ class NetworkDataSource(
 ): BankDataSource {
     override fun retrieveBanks(): Collection<Bank> {
         // getForEntity: `get` is request type && `ForEntity` means we want
-        // to parse the response into object of some time
+        // to parse the response into object of some type.
+        // `response` will contain all the fields which we even don't need
+        // => create datatype that at first extract desired columns
+        // && further we'll extract other required columns.
+        // I.e. at first we take `results` which is nested (`BankList.kt`)
+        // JSON && then we parse `results` in `Bank.kt`
         val response: ResponseEntity<BankList> = restTemplate.getForEntity<BankList>(
             "http://54.193.31.159/banks")
 
