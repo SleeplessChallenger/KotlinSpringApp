@@ -14,3 +14,4 @@ gradlew to use folder in the current dir
     docker image
     5.2 `docker run ____` where __ is the name of
         an image
+6. `find ~/.gradle -type f -name "*.lock" -delete` is a command to remove current thread that locks new one to start
